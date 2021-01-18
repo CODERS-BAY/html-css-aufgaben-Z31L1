@@ -1,0 +1,21 @@
+body {
+
+    background-color: rgb(241, 241, 241);
+    background-image: linear-gradient(rgb(61, 161, 255), rgb(50, 255, 50));
+    filter: drop-shadow(0 0 10px rgb(64, 74, 97));
+    background-attachment: fixed;
+}
+
+article {
+
+}
+
+article img{
+
+}
+
+iframe {
+    max-width: 100%;
+    max-height: 200px;
+}
+
