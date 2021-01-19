@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap');
+
+body {
+    margin:0%;
+    background-color: rgb(241, 241, 241);
+    background-image: linear-gradient(rgba(61, 255, 223, 0.5) 50%, rgba(50, 255, 50, 0.5) 90%);
+    filter: drop-shadow(0 0 10px rgb(99, 105, 119));
+    background-attachment: fixed;
+}
+header, footer{
+    text-align: center;
+}
+
+nav a {
+    font-size: large;
+    text-decoration: none;
+    border: 2px solid black;
+    display:inline-block;
+    padding-left: 19%;
+    padding-right: 19%;
+}
+
+article, table {
+    width: 100%; 
+    font-family: 'Times New Roman', Times, serif; 
+    text-align: center; 
+    border-collapse: collapse;
+}
+
+article :nth-child(2n+5){
+    background-color: rgba(241, 241, 241, 0.2);
+    text-align: right;
+}
+
+section {
+    height: 650px;
+    text-align: left;
+    border-top:2px solid black;
+}
+
+section a {
+    font-size: large;
+}
+
+section * {
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+iframe{
+    max-height: 300px;
+    max-width: 98%;
+    padding-bottom: 1%;
+}
+
+img {
+    height: 500px;
+    width: 800px;
+    object-fit: cover;  
+}
+
+table {
+    margin:1%;
+    width: 98%; 
+    font-family: 'Times New Roman', Times, serif; 
+    text-align: center; 
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #9aa4ff85;
+}
+
+tr:nth-child(odd){
+    background-color: #f2f2f238;
+}
+
+tr:nth-child(even){
+    background-color: #74747434;
+}
+
+form {
+    background-color: rgba(240, 240, 240, 0.2);
+    margin: 1%;
+    width: 80%;
+}
+
+div {
+    padding: 8px;
+}
+
+label, p {
+    font-size: 18px;
+    margin-left: 15px;
+    display: block;
+    cursor: pointer;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+#happiness{
+    width: 25%;
+}
+
+#yes, #no {
+    width: 25px;
+}
+
+section a, tr a:visited{
+    color:rgb(255, 0, 0);
+}
+
+section a::after, tr a::after{
+    content: "✔";
+}
+h1::first-letter{
+    color:rgb(12, 150, 0);
+    font-family: 'Potta One', cursive;
+    font-size: xx-large;
+}
+h2::first-letter{
+    color:rgb(251, 255, 0);
+    font-family: 'Potta One', cursive;
+    font-size: x-large;
+}
