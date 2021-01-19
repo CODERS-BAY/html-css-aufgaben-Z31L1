@@ -20,6 +20,7 @@ nav a {
     padding-right: 19%;
 }
 
+
 article, table {
     width: 100%; 
     font-family: 'Times New Roman', Times, serif; 
@@ -117,6 +118,11 @@ input, textarea, select {
 
 #yes, #no {
     width: 25px;
+}
+
+#svg {
+    max-height: 15px;
+    max-width: 15px;
 }
 
 section a, tr a:visited{
