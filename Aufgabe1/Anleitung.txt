@@ -1,0 +1,47 @@
+// Step 1
+- wenn Runde ist 2
+- Entferne Klasse'd-none' von "Aufgeben" Button
+
+// Step 2
+- Hol dir den eingegebenen Wert aus dem Input mit der ID breakTheCode mit .value und speichere ihn in eine neue Variable mit dem Namen userChoice
+
+// Step 3
+- die verschachtelten for-Schleifen
+   - deklariere eine Variable namens tip und speichere den Inhalt der Variable charAt an der Stelle i darin ab
+   - deklariere eine Variable namens comp und speichere den Wert der Variable codeBreak an der Stelle j darin ab
+   - rufe die Funktion checkNumbers auf und übergebe folgende Parameter: tip, comp, i, j, checkNumber
+
+// Step 4
+- Funktion checkNumbers
+     - Wenn die Variable tip gleich com und posCom gleich posUser ist
+     - ist checkNumber['rightNumberRightPosition'] gleich checkNumber['rightNumberRightPosition'] + 1 bedeutet richtige Zahl an richtiger Stelle
+     - sonst wenn tip gleich comp
+     - ist checkNumber['rightNumber'] gleich checkNumber['rightNumber'] + 1 bedeutet richtige Zahl an falscher Stelle
+     - gib den Wert checkNumber zurück
+
+// Step 5
+- gib im Tag mit der ID output aus das der User gewonnen hat
+- rufe die Funktion disablePlayButtons auf
+- füge dem Button mit der ID giveUp die KLasse d-none hinzu
+- füge dem Button mit der ID Play die Klasse d-none hinzu
+- else in if(checkNumber[...])
+- Rundennummer ausgeben und um eines erhöhen
+
+// Step 6
+- wenn 13 Runden gespielt sind
+    - rufe die Funktion disablePlayButtons auf
+    - ruf die Funktion endGame mit den Übergabeparameter win und round auf
+    - Ruf die Funktion codeToBreak auf mit dem Übergabeparameter checkNumber auf
+
+// Step 7
+- Funktion disablePlayButtons: Entferne von dem Button mit der id reload die KLasse d-none
+
+// Step 8
+- Funktion codeToBreak
+    - Gib folgendes aus (erweitere die ausgabe mit +=) im Tag mit der ID output
+
+// Step 9
+- reloadGame Funktion
+
+// Step 10
+- endGame Funktion
