@@ -1,0 +1,31 @@
+Neuen Ordner in Xamp/Wamp erstellen (z.b.: C:\xamp\htdocs\adventure oder C:\wamp64\www\adventure)
+Dateien/Ordner in den neuen Xamp/Wamp Odner entpacken. 
+
+Struktur sollte jetzt so aussehen:
+
++www oder Htdocs
+	+adventure (den Ordner den ihr erstellt habt)
+		+img
+		createStory.php
+		getStrory.php
+		index.php
+		login.inc.php
+		save.php
+		story.php
+		style.css
+		adventure.sql
+
+(das + steht für Ordner)
+
+
+SQL Datei in die Datenbank importieren:
+Erstelle eine neue Datenbank in der phpMyAdmin Oberfläche und klicke sie danach an. 
+Importieren anklicken, adventure.sql aus dem Ordner auswählen und ok klicken.
+
+
+Login.inc.php anpassen:
+$db ist der Name der erstellten Datenbank.
+
+Wenn xamp/wamp ausgeführt wird sollte das Project im Browser über localhost/Datenbank erreichbar sein.
+
+Viel Spass
