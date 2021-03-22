@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        .break {
+            min-height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-image: url('https://images.unsplash.com/photo-1543285198-3af15c4592ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80');
+        }
+
+    </style>
+</head>
+<body>
+<main class="break py-5">
+    <article class="container py-5 my-5">
+
+        <section class="bg-light p-4 ">
+            <h1>CodeBreaker</h1>
+            <h2 id="roundOutput">0</h2>
+           <form class="w-100">
+               <div class="form-group">
+                   <label for="breakTheCode">Gib eine Zahl zwischen 111 und 999 ein</label>
+                   <input type="number" class="form-control" id="breakTheCode" min="111" max="999">
+               </div>
+               <div class="p-3">
+                   <button type="button" id="play" onclick="codeBreaker()" class="btn border border-dark">Raten</button>
+                   <button type="button" id="giveUp" onclick="reloadGame()" class="btn border border-dark d-none">Aufgeben</button>
+                   <button type="button" id="reload" onclick="reloadGame()" class="btn border border-dark d-none">Nochmal</button>
+               </div>
+           </form>
+
+        </section>
+        <section class="d-flex flex-wrap" id="output"></section>
+    </article>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossOrigin="anonymous"></script>
+</script>
+<!--
+Inhalte der Übung
+    - typeof
+    - Arrays
+    - for
+    - addEventListener
+    .charAt()
+    .value
+-->
+
+
+<script>
+    let round = 1;
+
+    let zahl1 = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+    let zahl2 = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+    let zahl3 = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+
+    let codeBreak = [zahl1, zahl2, zahl3];
+    console.log(codeBreak);
+    function codeBreaker() {
+        let checkNumber = {
+            'rightNumberRightPosition': 0,
+            'rightNumber': 0
+        }
+        // wenn Runde ist 2
+        // Entferne Klasse'd-none' von "Aufgeben" Button
+        if(round == 2){
+            document.getElementById(id="giveUp").classList.remove("d-none");
+        }       
+        // Hol dir den eingegebenen Wert aus dem Input mit der ID breakTheCode mit .value und speichere ihn in eine neue Variable
+        // Mit dem Namen userChoice
+        let userChoice = document.getElementById(id="breakTheCode").value;
+        // typeoff gibt euch an von welchem Typ die Variable userChoice ist
+        console.log(typeof userChoice);
+        // Um zu überprüfen ob die Zahl vorkommt UND an der richtigen Stelle ist braucht ihr
+        // eine for-Schleife in der for-Schleife
+        for (let i = 0; i < 3; i++) {
+            // deklariere eine Variable namens tip und speichere den Inhalt der Variable charAt an der Stelle i darin ab
+            let tip = userChoice.charAt(i);
+            for (let j = 0; j < 3; j++) {
+                // deklariere eine Variable namens comp und speichere den Wert der Variable codeBreak an der Stelle j darin ab
+                let comp = codeBreak[j];
+                // rufe die Funktion checkNumbers auf und übergebe folgende Parameter
+                // tip, comp, i, j, checkNumber
+                checkNumbers(tip, comp, i, j, checkNumber);
+            }
+        }
+        // ACHTUNG: Ausgaben sollen erweitert werden und nicht ersetzt. Zuweisung ist += und nicht nur =
+        if(checkNumber['rightNumberRightPosition'] === 3) {
+            // gib im Tag mit der ID output aus das der User gewonnen hat
+            document.getElementById(id="output").innerHTML+='<div class="p-3 bg-info border">Gewonnen!</div>';
+            // rufe die Funktion disablePlayButtons auf
+            disablePlayButtons();
+            // füge dem Button mit der ID giveUp die KLasse d-none hinzu
+            document.getElementById(id="giveUp").classList.add("d-none");
+            // füge dem Button mit der ID Play die Klasse d-none hinzu
+            document.getElementById(id="play").classList.add("d-none");
+        } 
+        else {
+            // gib im Tag mit der ID Output folgendes aus :
+            document.getElementById(id="output").innerHTML+= '<div class="p-3 bg-info border">Zahlen an der richtigen Stelle ' +
+            checkNumber['rightNumberRightPosition'] + "<br>" +
+            'Zahlen die vorkommen ' +
+            checkNumber['rightNumber'] + '</div>';
+        }
+        // Gib die Rundennummer aus
+        document.getElementById(id="roundOutput").innerText=round;
+        // erhöhe die Runde um 1
+        round++;
+
+        if (round == 13) {
+            // rufe die Funktion disablePlayButtons auf
+            disablePlayButtons();
+            // ruf die Funktion endGame mit den Übergabeparameter win und round auf
+            endGame();
+            // Ruf die Funktion codeToBreak auf mit dem Übergabeparameter checkNumber auf
+            codeToBreak();
+        }
+    }
+    function disablePlayButtons() {
+        // Entferne von dem Button mit der id reload die KLasse d-none
+        document.getElementById(id="reload").classList.remove("d-none");
+    }
+    function codeToBreak(codeBreak) {
+        // Gib folgendes aus (erweitere die ausgabe mit +=) im Tag mit der ID output
+        document.getElementById(id="output").innerHTML+='<div class="p-3 bg-danger border">Verloren' + "<br>" +
+            'zu erratende Zahl ' +
+            codeBreak['0'] + ' ' + codeBreak['1'] + ' ' + codeBreak['2'] + '</div>';
+    }
+    function checkNumbers(tip, comp, posUser, posComp, checkNumber) {
+        // Wenn die Variable tip gleich com und posCom gleich posUser ist
+        if (tip == comp && posComp == posUser){
+        // ist checkNumber['rightNumberRightPosition'] gleich checkNumber['rightNumberRightPosition'] + 1 bedeutet richtige Zahl an richtiger Stelle
+        checkNumber['rightNumberRightPosition'] = checkNumber['rightNumberRightPosition'] + 1;}
+        // sonst wenn tip gleich comp
+        else if(tip == comp){
+        // ist checkNumber['rightNumber'] gleich checkNumber['rightNumber'] + 1 bedeutet richtige Zahl an falscher Stelle
+        checkNumber['rightNumber'] = checkNumber['rightNumber'] + 1;
+        // gib den Wert checkNumber zurück
+        document.getElementById(id="output").innerHTML+='<div class="p-3 bg-danger border">' + checkNumber['rightNumber'] + '</div>';}
+    }
+
+
+    function reloadGame() {
+        // Seite soll neu geladen werden
+        location.reload();
+    }
+    function endGame() {
+        // Rufe die Funktion disablePlayButton auf
+        disablePlayButtons();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+body{
+    background-attachment: fixed;
+    background: radial-gradient(ellipse at top,#5adbd1 0%, #353434 100%);
+    filter: drop-shadow(0 0 10px rgb(64, 74, 97));
+}
+
+article{
+    border: solid 3px;
+
+}
+
+audio  {
+    margin: 15px;
+}
+
+video, iframe{
+    max-width: 560px;
+    max-height: 560px;
+    margin-left: 30px;
+}

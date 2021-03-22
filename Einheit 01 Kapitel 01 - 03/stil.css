@@ -1,0 +1,31 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(39, 39, 39);
+    color:rgb(231, 231, 231)
+}
+
+nav{
+    margin: 20px;
+    font-size: xx-large;
+}
+
+main {
+    display: flex;
+}
+
+article{
+    width: 50%;
+    margin: 5px;    
+}
+
+article img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 720px) {
+    main {
+        display: inline-block;
+    }
+}

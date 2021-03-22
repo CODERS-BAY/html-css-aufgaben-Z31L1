@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>Zeili Zoo</title>
+    <link rel = "stylesheet" type = "text/css" href = "css/style.css" />
+</head>
+<body>
+    <header>
+        <h1>Zeili Zoo</h1>
+        <nav>
+            <a href="index.html">Unsere Tiere Übersicht</a>
+            <a href="info.html">Infoseite unserer Tiere</a>
+        </nav>
+    </header>
+    <main>
+        <form method="get" action="">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="date">Datum</label>
+                <input type="date" name="date" id="date">
+            </div>
+            <div>
+                <label for="time">Zeit</label>
+                <input type="time" name="time" id="time">
+            </div>
+            <div>
+                <label for="happiness">Wie gut hat ihnen der besuch gefallen?</label><br>
+                <p>😡 <input type="range" id="happiness" name="happiness" min="0" max="5">😄</p>
+            </div>
+            <div>
+                <p>Würden sie uns weiterempfehlen?</p>
+                <p>Ja<input type="radio" id="yes" name="recommendation" value="yes"> Nein
+                <input type="radio" id="no" name="recommendation" value="no"></p>
+            </div>
+            <div>
+                <label for="bestAnimal">Welches Tier hat ihnen am besten gefallen?</label>
+                <input list="animal" name="bestAnimal" id="bestAnimal" rows="6">
+                <datalist id="animal">
+                    <option value="Giraffe">
+                    <option value="Grizzly Bär">
+                    <option value="Orang-Utan">
+                    <option value="See Robbe">
+                    <option value="Afrikanischer Esel">
+                    <option value="Ziege">
+                    <option value="Kamel">
+                    <option value="Kobra">
+                    <option value="Schaf">
+                    <option value="Lama">
+                    <option value="Tiger"> 
+                    <option value="Schimpanse">
+                    <option value="Eisbär">
+                    <option value="Löwe">
+                    <option value="Krokodil">
+                    <option value="Pelikan">
+                    <option value="See-Otter">
+                    <option value="Geier">                        
+                    <option value="Pinguin">
+                    <option value="Papagei">                       
+                </datalist>
+            </div>
+            <div>
+                <label for="comment">Anfrage</label>
+                <textarea rows="8" name="comment" id="comment"></textarea>
+            </div>
+            <div>
+                <p>Besucherinfo</p>
+                <select name="Besucherinfo" size="5">
+                    <option>Familienausflug</option>
+                    <option>Allein unterwegs</option>
+                    <option>Gruppenausflug</option>
+                    <option>Ausflug mit Freunden</option>
+                    <option>was anderes</option>
+                </select>
+            </div>
+            <input type="submit" onclick="send()">
+        </form>
+    </main>
+    <footer>
+        <H2>© 2021 Zeilberger</H2>
+    </footer>
+
+    <script>
+        function send() {
+          alert("Vielen dank für ihre Anfrage!");
+        }
+        </script>
+
+</body>
+</html>
