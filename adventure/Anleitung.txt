@@ -26,6 +26,6 @@ Importieren anklicken, adventure.sql aus dem Ordner auswählen und ok klicken.
 Login.inc.php anpassen:
 $db ist der Name der erstellten Datenbank.
 
-Wenn xamp/wamp ausgeführt wird sollte das Project im Browser über localhost/Datenbank erreichbar sein.
+Wenn xamp/wamp ausgeführt wird sollte das Project im Browser über localhost/Datenbankname erreichbar sein.
 
 Viel Spass
