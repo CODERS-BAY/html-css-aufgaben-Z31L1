@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <head>
-<link rel="sylesheet" type="text/css" href="style.css">
 <meta charset="UTF-8">
-
 </head>
 <body>
-    <canvas id="output"></canvas>
-    <video id="webcam" width="640" height="480" playsinline style="
-        visibility: hidden;">
-</video>
-<h1 id="status">Loading...</h1>
+
+<canvas id="output" style="padding: 0px; position: fixed; top: 3em; left:50%; transform: translate(-50%);"></canvas>
+<h1 id="status" style="padding: 10px; background-color: rgba(255, 255, 255, 0.082); position: fixed;">Loading...</h1>
+<div id="frame"></div>
+<video id="webcam" width="640" height="480" playsinline style="visibility: hidden; position: fixed; padding: 0px;"></video>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@0.0.1/dist/face-landmarks-detection.js"></script>
@@ -18,9 +16,9 @@
 <script src="threejs/OrbitControls.js"></script>
 <script>
 //needed Vars
-   var container, controls, camera, scene, renderer, mesh, sprite,canvas, midx,midy;
+   let container, controls, camera, scene, renderer, mesh, sprite ,canvas , midx ,midy ,frameHeight ,frameWidth, loader;
 
-// Hurry up loading the scene
+// w8 for import Scripts
 document.addEventListener("DOMContentLoaded", function(event) {
   init();
 
@@ -29,20 +27,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function init() {
 
+        frameHeight = window.innerHeight - 20;
+        frameWidth = window.innerWidth - 20;
         //Build empties
-        container = document.createElement( 'div' ); 
+        container = document.getElementById( 'frame' ); 
         document.body.appendChild( container );
-        camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 200 ); //Build always camera
+        camera = new THREE.PerspectiveCamera( 50, frameWidth / frameHeight, 1, 100 ); //Build always camera
         camera.position.set( 0, 0, 5 ); 
         scene = new THREE.Scene();
         scene.add(camera);//Add camera to Scene
         scene.background = new THREE.Color( 0x1200E7 );// Background of the Scene
 
+
         //Mouse input for Orbital Control
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.setPixelRatio( window.devicePixelRatio );
-        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setSize( frameWidth, frameHeight );
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild( renderer.domElement );
@@ -52,10 +53,24 @@ function init() {
         controls.minDistance = 2.5;
         window.addEventListener( 'resize', onWindowResize, false );
 
-        //Load the gltf Scene
-        var loader = new THREE.GLTFLoader();
-        loader.load( 'co.gltf', function ( gltf ) {
+
+        loader = new THREE.GLTFLoader();
+        checkFormat(frameWidth,frameHeight);
+    }
+
+    //Positionate Cam to Facemid Position
+    function camPos(midx,midy){
+        midx = (midx - 320)*-0.02;//Offset (TF coordinate - camresolution/2)Invert result (rest depends on Model) 
+        midy = (midy - 240)*-0.02;//Offset (TF coordinate - camresolution/2)Invert result (rest depends on Model) 
+        camera.position.set(midx,midy,5);// New camPos coordinates from Facetracking mid
+        controls.update();
+    }
+
+    function checkFormat(width,height){
+        if(width < 1500){
+            loader.load( 'codhoch.gltf', function ( gltf ) {
             gltf.scene.scale.set(1,1,1); // Scale
+            scene = new THREE.Scene();
             scene.add( gltf.scene );// Import whole scene from Blender
 		    gltf.animations; // Array<THREE.AnimationClip>
 		    gltf.scene; // THREE.Group
@@ -64,22 +79,28 @@ function init() {
 		    gltf.asset; // Object
             animate();
         } );
+        }
+        else{
+        
+        loader.load( 'codquer.gltf', function ( gltf ) {
+            gltf.scene.scale.set(1,1,1); // Scale
+            scene = new THREE.Scene();
+            scene.add( gltf.scene );// Import whole scene from Blender
+		    gltf.animations; // Array<THREE.AnimationClip>
+		    gltf.scene; // THREE.Group
+		    gltf.scenes; // Array<THREE.Group>
+		    gltf.cameras; // Array<THREE.Camera>
+		    gltf.asset; // Object
+            animate();
+        } );
+        }
     }
-
-    //Positionate Cam to Facemid Position
-    function camPos(midx,midy){
-        midx = (midx - 320)*-0.02;//Offset (TF coordinate - camresolution/2)Invert result (rest depends on Model) 
-        midy = (midy - 240)*-0.02;//Offset (TF coordinate - camresolution/2)Invert result (rest depends on Model) 
-        console.log(midx,midy);
-        camera.position.set(midx,midy,5);// New campos coordinates from Facetracking mid
-        controls.update();
-    }
-
     //Orbitcontrol update window Resolution
     function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        checkFormat((window.innerWidth - 20), (window.innerHeight - 20));
+        camera.aspect = (window.innerWidth - 20) / (window.innerHeight - 20);
         camera.updateProjectionMatrix();
-        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setSize((window.innerWidth - 20), (window.innerHeight - 20));
     }
 
     //Animate the Cam movement
@@ -111,6 +132,7 @@ function init() {
         ctx.lineTo( x1, y1 );
         ctx.stroke();
         }
+
 
 
         let output = null;
@@ -163,7 +185,6 @@ function init() {
                 midx = ((x2 - x1)/2)+x1;
                 midy = ((y2 - y1)/2)+y1;
                 camPos(midx,midy);
-                setText( `on tracking`);
                 drawLine( output, midx, midy);
                 
                 // Draw the face mesh
