@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>Zeilberger Stefan</title>
+</head>
+<body>
+    <style>
+        html, body {
+           margin: 0;
+           height: 100%;
+           background-color:#000013;
+        }
+        #webgl {
+           width: 100%;
+           height: 100%;
+           display: block;
+        }
+        </style>
+
+<div id="webgl"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r75/three.min.js"></script>
+<script src="https://82mou.github.io/threejs/js/OrbitControls.js"></script>
+
+<script>
+
+function init() {
+  let scene = new THREE.Scene();
+  let camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth/window.innerHeight,
+    1,
+    1000
+  );
+  let spotLight_01 = getSpotlight('rgb(145, 200, 255)', 1);
+  spotLight_01.name = 'spotLight_01';
+  let spotLight_02 = getSpotlight('rgb(255, 220, 180)', 1);
+  spotLight_02.name = 'spotLight_02';
+  
+  // create geometric objects
+  let plane = getPlane(50, 50);
+  let sphere = getSphere(0);
+  sphere.name = 'sphere';
+  
+  // add objects to the scene
+  scene.add(sphere);
+  scene.add(plane);
+  scene.add(spotLight_01);
+  scene.add(spotLight_02);
+  
+  // transform objects
+  camera.position.x = 0;
+  camera.position.y = 6;
+  camera.position.z = 6;
+  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  
+ 	spotLight_01.position.x = 6;
+	spotLight_01.position.y = 8;
+	spotLight_01.position.z = -20;
+  
+	spotLight_02.position.x = -12;
+	spotLight_02.position.y = 6;
+	spotLight_02.position.z = -10;
+  
+  plane.rotation.x = Math.PI/2;
+  sphere.position.y = sphere.geometry.parameters.radius;
+  
+  // material adjustments
+  let planeMaterial = plane.material;
+  let sphereMaterial = sphere.material;
+  
+  let textureLoader = new THREE.TextureLoader();
+  let texture = textureLoader.load( 'assets/lava.jpg' );
+  let metalTexture = textureLoader.load( 'assets/lava.jpg' );
+  
+  planeMaterial.map = texture;
+  planeMaterial.bumpMap = texture;
+  planeMaterial.roughnessMap = texture;
+  planeMaterial.roughness = 0.65;
+  planeMaterial.metalness = 0.75;
+  planeMaterial.bumpScale = 0.01;
+  
+  sphereMaterial.bumpMap = metalTexture;
+  sphereMaterial.roughnessMap = metalTexture;
+  sphereMaterial.bumpScale = 0.01;
+  sphereMaterial.roughness = 0.75;
+  sphereMaterial.metalness = 0.25;
+  
+  let repetition = 6;
+  let textures = ['map', 'bumpMap', 'roughnessMap'];
+  textures.forEach((mapName) => {
+    planeMaterial[mapName].wrapS = THREE.RepeatWrapping;
+    planeMaterial[mapName].wrapT = THREE.RepeatWrapping;
+    planeMaterial[mapName].repeat.set(repetition, repetition);
+  });
+  
+  // enabling antialias to get rid of jagged edges in the render
+  let renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.shadowMap.enabled = true;
+  document.getElementById('webgl').appendChild(renderer.domElement);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  
+  let controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  
+  update(renderer, scene, camera, controls);
+}
+
+function getSphere(radius) {
+  let geo = new THREE.SphereGeometry(radius, 24, 24);
+  let material = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+  });
+  let mesh = new THREE.Mesh(geo, material);
+  mesh.castShadow = true;
+  
+  return mesh;
+}
+
+function getPlane(w, h) {
+  let geo = new THREE.PlaneGeometry(w, h);
+  let material = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+  });
+  let mesh = new THREE.Mesh(geo, material);
+  mesh.receiveShadow = true;
+  
+  return mesh;
+}
+
+function getSpotlight(color, intensity) {
+  let light = new THREE.SpotLight(color, intensity);
+  light.castShadow = true;
+  
+  light.shadow.mapSize.x = 4096;
+  light.shadow.mapSize.y = 4096;
+  
+  return light;
+}
+
+function update(renderer, scene, camera, controls) {
+  renderer.render(scene, camera);
+  controls.update();
+  
+  let spotLight_01 = scene.getObjectByName('spotLight_01');
+  spotLight_01.intensity += (Math.random() - 0.5) * 0.15;
+  spotLight_01.intensity = Math.abs(spotLight_01.intensity);
+  
+  let spotLight_02 = scene.getObjectByName('spotLight_02');
+  spotLight_02.intensity += (Math.random() - 0.5) * 0.05;
+  spotLight_02.intensity = Math.abs(spotLight_02.intensity);
+  
+  requestAnimationFrame(function() {
+    update(renderer, scene, camera, controls);
+  })
+}
+
+init();
+
+
+
+</script>
+</body>
+</html>

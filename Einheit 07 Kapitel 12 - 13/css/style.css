@@ -192,6 +192,10 @@ a:hover {
     text-decoration: underline;
 }
 
+datalist #animals {
+    max-height: 250px;
+}
+
 
 @keyframes turner{
     0%{  transform: rotateY(0deg)   }
