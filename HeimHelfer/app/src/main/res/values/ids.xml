@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="inTitle" type="id" />
-    <item name="inDescription" type="id" />
-    <item name="btnDone" type="id" />
-    <item name="btnDelete" type="id" />
-    <item name="cam" type="id" />
-    <item name="imageView" type="id" />
-</resources>
